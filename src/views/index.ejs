@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loto 6/45 - Početna</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+      padding: 40px;
+    }
+    h1 {
+      color: #333;
+      margin-bottom: 30px;
+      text-align: center;
+      font-size: 2.5em;
+    }
+    .user-info {
+      background: #f8f9fa;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .info-box {
+      background: #e3f2fd;
+      padding: 20px;
+      border-radius: 8px;
+      margin: 15px 0;
+      border-left: 4px solid #2196f3;
+    }
+    .info-box h3 {
+      color: #1976d2;
+      margin-bottom: 10px;
+    }
+    .numbers {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+    .number {
+      background: #667eea;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 50%;
+      font-weight: bold;
+      min-width: 45px;
+      text-align: center;
+    }
+    .btn {
+      display: inline-block;
+      padding: 12px 30px;
+      background: #667eea;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: bold;
+      transition: background 0.3s;
+      border: none;
+      cursor: pointer;
+    }
+    .btn:hover {
+      background: #5568d3;
+    }
+    .btn-secondary {
+      background: #6c757d;
+    }
+    .btn-secondary:hover {
+      background: #5a6268;
+    }
+    .empty-state {
+      color: #666;
+      font-style: italic;
+    }
+    .submit-link {
+      text-align: center;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎱 Loto 6/45</h1>
+
+    <% if (user) { %>
+      <div class="user-info">
+        <div>
+          <strong>Prijavljeni ste kao:</strong> <%= user.email || user.name %>
+        </div>
+        <a href="/logout" class="btn btn-secondary">Odjava</a>
+      </div>
+    <% } else { %>
+      <div class="user-info">
+        <div>Niste prijavljeni</div>
+        <a href="/login" class="btn">Prijava</a>
+      </div>
+    <% } %>
+
+    <div class="info-box">
+      <h3>Broj uplaćenih listića u trenutnom kolu</h3>
+      <p><%= ticketCount > 0 ? ticketCount : 'Nema uplaćenih listića' %></p>
+    </div>
+
+    <% if (hasDrawnNumbers) { %>
+      <div class="info-box">
+        <h3>Izvučeni brojevi u trenutnom kolu</h3>
+        <div class="numbers">
+          <% drawnNumbers.forEach(num => { %>
+            <div class="number"><%= num %></div>
+          <% }) %>
+        </div>
+      </div>
+    <% } else { %>
+      <div class="info-box">
+        <h3>Izvučeni brojevi</h3>
+        <p class="empty-state">Brojevi još nisu izvučeni</p>
+      </div>
+    <% } %>
+
+    <% if (isActive && user) { %>
+      <div class="submit-link">
+        <a href="/submit" class="btn">Uplati listić</a>
+      </div>
+    <% } else if (isActive && !user) { %>
+      <div class="submit-link">
+        <p style="color: #666; margin-bottom: 15px;">Prijavite se za uplatu listića</p>
+        <a href="/login" class="btn">Prijava</a>
+      </div>
+    <% } else { %>
+      <div class="submit-link">
+        <p class="empty-state">Uplate trenutno nisu omogućene</p>
+      </div>
+    <% } %>
+  </div>
+</body>
+</html>

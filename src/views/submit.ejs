@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Uplata listića - Loto 6/45</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+      padding: 40px;
+    }
+    h1 {
+      color: #333;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+    .user-info {
+      background: #f8f9fa;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    label {
+      font-weight: bold;
+      color: #333;
+    }
+    input {
+      padding: 12px;
+      border: 2px solid #ddd;
+      border-radius: 6px;
+      font-size: 16px;
+      transition: border-color 0.3s;
+    }
+    input:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+    .help-text {
+      font-size: 14px;
+      color: #666;
+    }
+    .error {
+      background: #fee;
+      color: #c33;
+      padding: 15px;
+      border-radius: 6px;
+      border-left: 4px solid #c33;
+      margin-bottom: 20px;
+    }
+    .btn {
+      padding: 15px 30px;
+      background: #667eea;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: bold;
+      transition: background 0.3s;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .btn:hover {
+      background: #5568d3;
+    }
+    .back-link {
+      text-align: center;
+      margin-top: 20px;
+    }
+    .back-link a {
+      color: #667eea;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Uplata listića</h1>
+
+    <div class="user-info">
+      <strong>Prijavljeni ste kao:</strong> <%= user.email || user.name %>
+    </div>
+
+    <% if (error) { %>
+      <div class="error">
+        <%= error %>
+      </div>
+    <% } %>
+
+    <form method="POST" action="/submit">
+      <div class="form-group">
+        <label for="idNumber">Broj osobne iskaznice ili putovnice</label>
+        <input
+          type="text"
+          id="idNumber"
+          name="idNumber"
+          maxlength="20"
+          required
+          placeholder="Unesite broj dokumenta"
+        >
+        <span class="help-text">Do 20 znakova</span>
+      </div>
+
+      <div class="form-group">
+        <label for="numbers">Odabrani brojevi (6-10 brojeva)</label>
+        <input
+          type="text"
+          id="numbers"
+          name="numbers"
+          required
+          placeholder="npr. 1, 5, 12, 23, 34, 45"
+        >
+        <span class="help-text">Unesite 6-10 brojeva između 1 i 45, odvojenih zarezom</span>
+      </div>
+
+      <button type="submit" class="btn">Potvrdi uplatu</button>
+    </form>
+
+    <div class="back-link">
+      <a href="/">← Povratak na početnu</a>
+    </div>
+  </div>
+</body>
+</html>
