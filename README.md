@@ -52,46 +52,67 @@ lotto-app/
 └─ render.yaml               # Render deployment config
 ```
 
-## Setup Instructions
+## Quick Start
 
-### 1. Clone the repository
+### Automated Setup (Recommended)
+
+```bash
+# 1. Clone and install
+git clone https://github.com/nincur/web2.git
+cd web2
+npm install
+
+# 2. Run the setup script
+./scripts/setup.sh
+```
+
+The setup script will:
+- Create `.env` file from template
+- Generate secure `AUTH0_SECRET`
+- Guide you through filling in credentials
+- Initialize database with Prisma
+
+For detailed setup instructions, see [SETUP_GUIDE.md](SETUP_GUIDE.md)
+
+### Manual Setup
+
+#### 1. Clone the repository
 
 ```bash
 git clone https://github.com/nincur/web2.git
 cd web2
 ```
 
-### 2. Install dependencies
+#### 2. Install dependencies
 
 ```bash
 npm install
 ```
 
-### 3. Set up environment variables
-
-Copy `.env.example` to `.env` and fill in the values:
+#### 3. Set up environment variables
 
 ```bash
+# Generate AUTH0_SECRET
+node scripts/generate-secret.js
+
+# Copy template and fill in values
 cp .env.example .env
+# Edit .env with your credentials
 ```
 
-Required variables:
-- `DATABASE_URL`: PostgreSQL connection string from Supabase
-- `AUTH0_CLIENT_ID`, `AUTH0_ISSUER_BASE_URL`: From Auth0 Application
-- `AUTH0_M2M_DOMAIN`, `AUTH0_M2M_AUDIENCE`: From Auth0 API settings
-- `APP_URL`: Your public app URL
+See [SETUP_GUIDE.md](SETUP_GUIDE.md) for detailed instructions on:
+- Creating Supabase database
+- Configuring Auth0 (OIDC + M2M)
+- Getting all required credentials
 
-### 4. Set up the database
+#### 4. Set up the database
 
 ```bash
-# Generate Prisma client
-npx prisma generate
-
-# Create and run migrations
-npx prisma migrate dev --name init
+npm run prisma:generate
+npm run prisma:migrate
 ```
 
-### 5. Run the application
+#### 5. Run the application
 
 ```bash
 # Development mode
@@ -101,6 +122,14 @@ npm run dev
 npm run build
 npm start
 ```
+
+Visit http://localhost:3000
+
+## Helper Scripts
+
+- `scripts/setup.sh` - Interactive setup wizard
+- `scripts/generate-secret.js` - Generate AUTH0_SECRET
+- `scripts/test-m2m.sh` - Test M2M endpoints
 
 ## API Endpoints
 
